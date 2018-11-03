@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<script>
+var myStringArray = ["Can't Tell",'Cancelled Flight','Customer Service Issue','Flight Attendant Complaints','Flight Booking Problems','Late Flight','Luggage','longlines'];
+let dict_data={};
+function call_api (x)  {
+ var Url = "https://jeyr20hczd.execute-api.us-east-1.amazonaws.com/test/comment/" + x + "?topic=";
+ var arrayLength = myStringArray.length;
+
+ var HttpClient = function() {
+ this.get = function(aUrl, aCallback) {
+ var anHttpRequest = new XMLHttpRequest();
+ anHttpRequest.onreadystatechange = function() { 
+ if (anHttpRequest.readyState == 4 && anHttpRequest.status == 200)
+ aCallback(anHttpRequest.responseText);
+ }
+ anHttpRequest.open( "GET", aUrl, true ); 
+ anHttpRequest.send( null ); 
+ }
+}
+ for (let i = 0; i < arrayLength; i++) {
+ 	 var url = Url + myStringArray[i];
+ 	 var client = new HttpClient();
+	 client.get(url, function(response) { 
+	 var response1 = JSON.parse(response);
+	 dict_data[myStringArray[i]]=response1.count;
+	 try{
+	 document.getElementById(myStringArray[i]).innerHTML = response1.count;}
+	 catch(e){}
+ })
+ } 
+ return dict_data;}
+
+</script>
+<canvas id="myChart" style="width: 512px; height: 256px">
+</canvas>
+<script src="Chart.js"></script>
+<script>
+window.onload = function () {
+document.getElementById("Save").onclick = function fun() {
+var x = document.forms["myForm"]["company"].value;
+call_api(x);
+var ctx = document.getElementById("myChart");
+var myChart = new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+        labels: myStringArray,
+        datasets: [{
+            label: '# of Votes',
+                 data: [dict_data["Can't Tell"], dict_data["Cancelled Flight"],dict_data["Customer Service Issue"],dict_data["Flight Attendant Complaints"],dict_data["Flight Booking Problems"],dict_data["Late Flight"],dict_data["Luggage"],dict_data["longlines"]],
+       //data : [86, 4, 52,7,13,22,5],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)',
+                'rgba(220, 220, 64, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255,99,132,1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)',
+                'rgba(220, 220, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+    }
+})}};
+</script>
+</head>
+<body>
+<center>
+ Javascript Get Request Test From Form
+ <br> <br>
+ <form name="myForm">
+ <input type="text" name="company"/>
+ <input type="button" id="Save" onclick="f1()" value="test"/>
+</form>
+ <center>
+ <br> <br>
+ <table border="1">
+ <tr><td>Can't Tell :</td><td id="Can't Tell"></td></tr>
+ <tr><td>Cancelled Flight :</td><td id="Cancelled Flight"></td></tr>
+ <tr><td>Customer Service Issue :</td><td id="Customer Service Issue"></td></tr>
+ <tr><td>Flight Attendant Complaints :</td><td id="Flight Attendant Complaints"></td></tr>
+ <tr><td>Flight Booking Problems :</td><td id="Flight Booking Problems"></td></tr>
+ <tr><td>Late Flight :</td><td id="Late Flight"></td></tr>
+ <tr><td>Luggage :</td><td id="Luggage"></td></tr>
+ <tr><td>longlines :</td><td id="longlines"></td></tr>
+ </table>
+</body>
+</html>
