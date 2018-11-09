@@ -1,11 +1,11 @@
 # dashboard_airlines
 This is an interactive dashboard using API Gateway as proxy for DynamoDB.
-
+<br><br>
 The dynamo table has been built in the project airlines-complaints.
 It contains tweets of complaints for 3 different airline companies. The tweets have been classified in different topics (luggage issue, late flights etc...) from 2nd of November to 7th of November. 
-<br>
+<br><br>
 How does it work?
-<br>
+<br><br>
 1: Choose a companyclick, upload data. This will call the data from the Dynamo table thanks to API Gateway.
 <br>
 2: Click "upload data", this will call the data from the Dynamo table thanks to API Gateway.
