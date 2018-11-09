@@ -1,5 +1,5 @@
 # dashboard_airlines
-This is an interactive dashboard using API Gateway as proxy for DynamoDB.
+This is an interactive dashboard using **API Gateway as proxy for DynamoDB**.
 <br><br><br>
 The dynamo table has been built in the project airlines-complaints.
 It contains tweets of complaints for 3 different airline companies. The tweets have been classified in different topics (luggage issue, late flights etc...) from 2nd of November to 7th of November. 
